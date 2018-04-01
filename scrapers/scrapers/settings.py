@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-
+import os
+from datetime import datetime
 # Scrapy settings for scrapers project
 #
 # For simplicity, this file contains only settings considered important or
@@ -20,6 +21,21 @@ NEWSPIDER_MODULE = 'scrapers.spiders'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
+
+# Save to data dir
+file_name = 'output'
+output_folder_name = 'data/output'
+os.chdir('..')
+data_dir = os.path.abspath(os.curdir) + f'/{output_folder_name}'
+os.chdir('scrapers')
+meta_num = str(len([x for x in os.listdir(data_dir) if file_name in x]))
+
+year = datetime.now().year
+month = datetime.now().strftime("%b")
+day = datetime.now().day
+
+FEED_FORMAT = "json"
+FEED_URI = f'../{output_folder_name}/{file_name}-{meta_num}-{month}-{day}-{year}.json'
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
